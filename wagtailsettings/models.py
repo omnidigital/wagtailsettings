@@ -1,5 +1,9 @@
 from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse
 from django.db import models
+
+from wagtail.wagtailcore import hooks
+from wagtail.wagtailadmin.menu import MenuItem
 
 SETTING_MODELS = []
 
@@ -17,9 +21,24 @@ def get_setting_content_types():
     return SETTING_CONTENT_TYPES
 
 
-def register_setting(model):
+def register_setting(model=None, **kwargs):
+    if model is None:
+        return lambda model: register_setting(model, **kwargs)
+
     if model not in SETTING_MODELS:
         SETTING_MODELS.append(model)
+
+    @hooks.register('register_settings_menu_item')
+    def hook():
+        print model
+        print model._meta.app_label
+        print model._meta.model_name
+        return MenuItem(
+            model._meta.verbose_name.title(),
+            reverse('wagtailsettings_edit', args=[
+                model._meta.app_label, model._meta.model_name]),
+            **kwargs)
+
     return model
 
 

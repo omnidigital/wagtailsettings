@@ -1,6 +1,5 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.utils.encoding import force_text
 from django.utils.text import capfirst
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
@@ -15,25 +14,6 @@ from wagtailsettings.permissions import user_can_edit_setting_type
 
 
 # == Helper functions ==
-
-
-def get_setting_type_name(content_type):
-    """ e.g. given the 'advert' content type, return ('Advert', 'Adverts') """
-    # why oh why is this so convoluted?
-    opts = content_type.model_class()._meta
-    return (
-        force_text(opts.verbose_name),
-        force_text(opts.verbose_name_plural)
-    )
-
-
-def get_setting_type_description(content_type):
-    """ return the meta description of the class associated with the given content type """
-    opts = content_type.model_class()._meta
-    try:
-        return force_text(opts.description)
-    except:
-        return ''
 
 
 def get_content_type_from_url_params(app_name, model_name):
@@ -68,30 +48,14 @@ def get_setting_edit_handler(model):
 # == Views ==
 
 
-@permission_required('wagtailadmin.access_admin')
-def index(request):
-    setting_types = [
-        (
-            get_setting_type_name(content_type)[0],
-            get_setting_type_description(content_type),
-            content_type
-        )
-        for content_type in get_setting_content_types()
-        if user_can_edit_setting_type(request.user, content_type)
-    ]
-    return render(request, 'wagtailsettings/index.html', {
-        'setting_types': setting_types,
-    })
-
-
 @permission_required('wagtailadmin.access_admin')  # further permissions are enforced within the view
-def edit(request, content_type_app_name, content_type_model_name):
-    content_type = get_content_type_from_url_params(content_type_app_name, content_type_model_name)
+def edit(request, app_name, model_name):
+    content_type = get_content_type_from_url_params(app_name, model_name)
     if not user_can_edit_setting_type(request.user, content_type):
         raise PermissionDenied
 
     model = content_type.model_class()
-    setting_type_name = get_setting_type_name(content_type)[0]
+    setting_type_name = model._meta.verbose_name
 
     instance = model.for_site(request.site)
     edit_handler_class = get_setting_edit_handler(model)
@@ -110,7 +74,7 @@ def edit(request, content_type_app_name, content_type_model_name):
                     instance=instance
                 )
             )
-            return redirect('wagtailsettings_index')
+            return redirect('wagtailsettings_edit', app_name, model_name)
         else:
             messages.error(request, _("The setting could not be saved due to errors."))
             edit_handler = edit_handler_class(instance=instance, form=form)
