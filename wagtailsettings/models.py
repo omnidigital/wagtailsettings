@@ -30,9 +30,6 @@ def register_setting(model=None, **kwargs):
 
     @hooks.register('register_settings_menu_item')
     def hook():
-        print model
-        print model._meta.app_label
-        print model._meta.model_name
         return MenuItem(
             model._meta.verbose_name.title(),
             reverse('wagtailsettings_edit', args=[
