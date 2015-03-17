@@ -38,7 +38,7 @@ SETTING_EDIT_HANDLERS = {}
 def get_setting_edit_handler(model):
     if model not in SETTING_EDIT_HANDLERS:
         panels = extract_panel_definitions_from_model_class(model, ['site'])
-        edit_handler = ObjectList(panels)
+        edit_handler = ObjectList(panels).bind_to_model(model)
 
         SETTING_EDIT_HANDLERS[model] = edit_handler
 
