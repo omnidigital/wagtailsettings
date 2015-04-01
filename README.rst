@@ -2,7 +2,7 @@
 wagtailsettings
 ===============
 
-A plugin for Wagtail that provides add developer-defined settings to the admin.
+A plugin for Wagtail that adds developer-defined settings to the admin.
 
 Installing
 ==========
@@ -11,7 +11,7 @@ Install using pip::
 
     pip install wagtailsettings
 
-It works with Wagtail 0.5 and upwards.
+It is compatible with Wagtail 1.0 and upwards.
 
 Add it to your ``INSTALLED_APPS``:
 
@@ -44,8 +44,22 @@ and register it using the ``register_setting`` decorator:
             help_text='Your YouTube channel or user account URL')
 
 
-A 'Settings' link will appear in the Wagtail admin,
-with links to each of the settings models defined.
+A 'Social media settings' link will appear in the Wagtail admin 'Settings' menu.
+
+You can change the label used in the menu by changing the
+`verbose_name <https://docs.djangoproject.com/en/dev/ref/models/options/#verbose-name>`_
+of your model.
+
+You can add an icon to the menu
+by passing an 'icon' argument to the ``register_setting`` decorator:
+
+.. code:: python
+
+    @register_setting(icon='icon-placeholder')
+    class SocialMediaSettings(BaseSetting):
+        # ...
+
+For a list of all available icons, please see the Wagtail style guide.
 
 Using in Python
 ---------------
