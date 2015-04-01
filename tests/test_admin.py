@@ -2,22 +2,8 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.tests.models import TestSetting
+from tests.app.models import TestSetting
 from wagtail.wagtailcore.models import Site
-
-
-class TestSettingIndexView(TestCase, WagtailTestUtils):
-    def setUp(self):
-        self.login()
-
-    def get(self, params={}):
-        return self.client.get(reverse('wagtailsettings_index'), params)
-
-    def test_status_code(self):
-        self.assertEqual(self.get().status_code, 200)
-
-    def test_displays_setting(self):
-        self.assertContains(self.get(), "Test setting")
 
 
 class TestSettingCreateView(TestCase, WagtailTestUtils):
@@ -26,12 +12,12 @@ class TestSettingCreateView(TestCase, WagtailTestUtils):
 
     def get(self, params={}):
         return self.client.get(
-            reverse('wagtailsettings_edit', args=('tests', 'testsetting')),
+            reverse('wagtailsettings_edit', args=('app', 'testsetting')),
             params)
 
     def post(self, post_data={}):
         return self.client.post(
-            reverse('wagtailsettings_edit', args=('tests', 'testsetting')),
+            reverse('wagtailsettings_edit', args=('app', 'testsetting')),
             post_data)
 
     def test_status_code(self):
@@ -67,12 +53,12 @@ class TestSettingEditView(TestCase, WagtailTestUtils):
 
     def get(self, params={}):
         return self.client.get(
-            reverse('wagtailsettings_edit', args=('tests', 'testsetting')),
+            reverse('wagtailsettings_edit', args=('app', 'testsetting')),
             params)
 
     def post(self, post_data={}):
         return self.client.post(
-            reverse('wagtailsettings_edit', args=('tests', 'testsetting')),
+            reverse('wagtailsettings_edit', args=('app', 'testsetting')),
             post_data)
 
     def test_status_code(self):
