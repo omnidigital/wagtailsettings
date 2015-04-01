@@ -30,7 +30,7 @@ and register it using the ``register_setting`` decorator:
 
 .. code:: python
 
-    from wagtailsettings.models import BaseSetting, register_setting
+    from wagtailsettings import BaseSetting, register_setting
 
     @register_setting
     class SocialMediaSettings(BaseSetting):
