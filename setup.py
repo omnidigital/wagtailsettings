@@ -3,21 +3,19 @@
 Install wagtailsettings using setuptools
 """
 
-from wagtailsettings import __version__
+from setuptools import setup, find_packages
 
 with open('README.rst', 'r') as f:
     readme = f.read()
 
-try:
-    from setuptools import setup, find_packages
-except ImportError:
-    from ez_setup import use_setuptools
-    use_setuptools()
-    from setuptools import setup, find_packages
+with open('wagtailsettings/version.py') as v:
+    version = '0.0.0'
+    exec(v.read())  # Get version
+
 
 setup(
     name='wagtailsettings',
-    version=__version__,
+    version=version,
     description='Admin-editable settings for Wagtail projects',
     long_description=readme,
     author='Tim Heap',
@@ -31,7 +29,7 @@ setup(
     packages=find_packages(),
 
     include_package_data=True,
-    package_data={ },
+    package_data={},
 
     classifiers=[
         'Environment :: Web Environment',
