@@ -18,7 +18,7 @@ Add it to your ``INSTALLED_APPS``:
 .. code:: python
 
     INSTALLED_APPS += [
-        'wagtailnews',
+        'wagtailsettings',
     ]
 
 
@@ -30,7 +30,7 @@ and register it using the ``register_setting`` decorator:
 
 .. code:: python
 
-    from wagtailnews.models import BaseSetting, register_setting
+    from wagtailsettings.models import BaseSetting, register_setting
 
     @register_setting
     class SocialMediaSettings(BaseSetting):
@@ -62,10 +62,11 @@ the ``BaseSetting.for_site`` method will retrieve the setting for the supplied s
 Using in Templates
 ------------------
 
-Add the ``request`` and ``wagtailnews`` context processors to your settings:
+Add the ``request`` and ``wagtailsettings`` context processors to your settings:
 
 .. code:: python
 
+    from django.conf import global_settings
     TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
         'django.core.context_processors.request',
         'wagtailsettings.context_processors.settings',
