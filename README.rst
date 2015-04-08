@@ -16,4 +16,7 @@ It is compatible with Wagtail 1.0 and upwards, Python
 Documentation
 =============
 
-Refer to the ` ``wagtailsettings`` documentation on ReadTheDocs <https://wagtailsettings.readthedocs.org/en/latest/>`_.
+Refer to the |docs|_.
+
+.. |docs| replace:: ` ``wagtailsettings`` documentation on ReadTheDocs
+.. _docs: https://wagtailsettings.readthedocs.org/en/latest/
