@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 
 from wagtail.wagtailadmin.edit_handlers import ObjectList, extract_panel_definitions_from_model_class
 
-from wagtailsettings.models import get_setting_content_types
+from wagtailsettings.registry import registry
 from wagtailsettings.permissions import user_can_edit_setting_type
 
 
@@ -25,7 +25,7 @@ def get_content_type_from_url_params(app_name, model_name):
         content_type = ContentType.objects.get_by_natural_key(app_name, model_name)
     except ContentType.DoesNotExist:
         raise Http404
-    if content_type not in get_setting_content_types():
+    if content_type not in registry.content_types:
         # don't allow people to hack the URL to edit content types that aren't registered as settings
         raise Http404
 
