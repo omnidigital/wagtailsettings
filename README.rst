@@ -18,5 +18,5 @@ Documentation
 
 Refer to the |docs|_.
 
-.. |docs| replace:: ` ``wagtailsettings`` documentation on ReadTheDocs
+.. |docs| replace:: ``wagtailsettings`` documentation on ReadTheDocs
 .. _docs: https://wagtailsettings.readthedocs.org/en/latest/
