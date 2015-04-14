@@ -13,12 +13,16 @@ class Registry(object):
     def __init__(self):
         self.models = []
 
-    def register(self, model, **kwargs):
+    def register(self, model, icon='cog', **kwargs):
         if model in self.models:
             return model
 
         self.models.append(model)
-
+        icon_classes = 'icon icon-' + icon
+        if 'classnames' in kwargs:
+            kwargs['classnames'] += ' ' + icon_classes
+        else:
+            kwargs['classnames'] = icon_classes 
         @hooks.register('register_settings_menu_item')
         def hook():
             return MenuItem(
