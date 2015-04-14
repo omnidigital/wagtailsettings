@@ -7,3 +7,8 @@ from wagtailsettings import BaseSetting, register_setting
 class TestSetting(BaseSetting):
     title = models.CharField(max_length=100)
     email = models.EmailField()
+
+
+@register_setting(icon="tag")
+class IconSetting(BaseSetting):
+    pass
