@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.db.models import get_model
 from django.utils.functional import cached_property
+from django.utils.text import capfirst
 
 from wagtail.wagtailcore import hooks
 from wagtail.wagtailadmin.menu import MenuItem
@@ -26,7 +27,7 @@ class Registry(object):
         @hooks.register('register_settings_menu_item')
         def hook():
             return MenuItem(
-                model._meta.verbose_name.title(),
+                capfirst(model._meta.verbose_name),
                 reverse('wagtailsettings_edit', args=[
                     model._meta.app_label, model._meta.model_name]),
                 **kwargs)
