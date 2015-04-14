@@ -8,6 +8,8 @@ INSTALLED_APPS = [
     'wagtail.wagtailadmin',
     'wagtail.wagtailusers',
     'wagtail.wagtailsites',
+    'wagtail.wagtailimages',
+    'wagtail.wagtaildocs',
 
     'taggit',
     'compressor',
