@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
 from django.db.models import get_model
-from django.utils.functional import cached_property
 from django.utils.text import capfirst
 
 from wagtail.wagtailcore import hooks
@@ -34,7 +33,7 @@ class Registry(object):
 
         return model
 
-    @cached_property
+    @property
     def content_types(self):
         ContentType = get_model('contenttypes.ContentType')
         content_types = list(map(
